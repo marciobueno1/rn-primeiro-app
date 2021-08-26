@@ -1,24 +1,39 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 
-interface ClockProps {
-  date: Date;
-}
+function Clock() {
+  const [date, setDate] = useState(new Date());
 
-function Clock(props: ClockProps) {
+  const tick = () => {
+    setDate(new Date());
+  };
+
+  useEffect(() => {
+    console.log("componentDidMount");
+    const timerID = setInterval(tick, 1000);
+    return () => {
+      console.log("componentWillUnmount");
+      clearInterval(timerID);
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 49, color: "white" }}>Hello, world!</Text>
       <Text style={{ fontSize: 49, color: "white" }}>
-        It is {props.date.toLocaleTimeString()}.
+        It is {date.toLocaleTimeString()}.
       </Text>
+      <Button title="Atualiza Data" onPress={tick} />
     </View>
   );
 }
 
 export default function App(): JSX.Element {
-  return <Clock date={new Date()} />;
+  return (
+    <View style={styles.container}>
+      <Clock />
+    </View>
+  );
 }
 
 // export default class App extends React.Component {
