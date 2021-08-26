@@ -1,16 +1,24 @@
 import { StatusBar } from "expo-status-bar";
-import React, { Props } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function App(): JSX.Element {
-  console.log("teste3...");
+interface ClockProps {
+  date: Date;
+}
+
+function Clock(props: ClockProps) {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 49, color: "white" }}>Hello World!</Text>
-      <Text style={{ fontSize: 30, color: "yellow" }}>Novo texto!</Text>
-      <StatusBar style="auto" />
+      <Text style={{ fontSize: 49, color: "white" }}>Hello, world!</Text>
+      <Text style={{ fontSize: 49, color: "white" }}>
+        It is {props.date.toLocaleTimeString()}.
+      </Text>
     </View>
   );
+}
+
+export default function App(): JSX.Element {
+  return <Clock date={new Date()} />;
 }
 
 // export default class App extends React.Component {
