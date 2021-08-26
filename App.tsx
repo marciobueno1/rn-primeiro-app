@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Button, Provider as PaperProvider } from "react-native-paper";
 
 function Clock() {
   const [date, setDate] = useState(new Date());
@@ -23,16 +24,32 @@ function Clock() {
       <Text style={{ fontSize: 49, color: "white" }}>
         It is {date.toLocaleTimeString()}.
       </Text>
-      <Button title="Atualiza Data" onPress={tick} />
     </View>
   );
 }
 
-export default function App(): JSX.Element {
+function App(): JSX.Element {
+  const [exibirData, setExibirData] = useState(true);
+
+  const handleButtonPress = () => {
+    setExibirData(!exibirData);
+  };
+
   return (
     <View style={styles.container}>
-      <Clock />
+      {exibirData && <Clock />}
+      <Button icon="camera" mode="outlined" onPress={handleButtonPress}>
+        Exibe Data
+      </Button>
     </View>
+  );
+}
+
+export default function PaperApp() {
+  return (
+    <PaperProvider>
+      <App />
+    </PaperProvider>
   );
 }
 
